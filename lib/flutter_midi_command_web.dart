@@ -122,18 +122,22 @@ class FlutterMidiCommandWeb extends MidiCommandPlatform {
 
   @override
   void teardown() {
-    //TODO: go through and call disconnect on all devics, then close rx stream
+    //TODO: go through and call disconnect on all devices, then close rx stream
   }
 
-  /// Sends data to the currently connected device.wmidi hardware driver name
+  /// Sends data to the currently connected devices
   ///
   /// Data is an UInt8List of individual MIDI command bytes.
   @override
   void sendData(Uint8List data, {int? timestamp, String? deviceId}) {
-    // _connectedDevices.values.forEach((device) {
-    //   // print("send to $device");
-    //   device.send(data, data.length);
-    // });
+    final outputPorts = <html.MIDIOutput>[];
+    _connectedDevices.forEach((device) {
+      outputPorts.addAll(_webMidiOutputs.where((p) => p.name == device.name));
+    });
+    print("send to devices: $data");
+    for (var outport in outputPorts) {
+      outport.send(data, 1);
+    }
   }
 
   /// Stream firing events whenever a midi package is received.
