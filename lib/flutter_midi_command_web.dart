@@ -94,7 +94,8 @@ class FlutterMidiCommandWeb extends MidiCommandPlatform {
 
   /// Connects to the device.
   @override
-  void connectToDevice(MidiDevice device, {List<MidiPort>? ports}) {
+  Future<void> connectToDevice(MidiDevice device,
+      {List<MidiPort>? ports}) async {
     // connect up incoming webmidi data to our rx stream of MidiPackets
     final inputPorts = _webMidiInputs.where((p) => p.name == device.name);
     for (var inport in inputPorts) {

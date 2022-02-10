@@ -75,21 +75,21 @@ packages:
       path: "../../FlutterMidiCommand"
       relative: true
     source: path
-    version: "0.3.0"
+    version: "0.4.2"
   flutter_midi_command_linux:
     dependency: transitive
     description:
-      path: "../../flutter_midi_command_linux"
-      relative: true
-    source: path
-    version: "0.2.0"
+      name: flutter_midi_command_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5"
   flutter_midi_command_platform_interface:
     dependency: transitive
     description:
       name: flutter_midi_command_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4"
+    version: "0.4.0"
   flutter_midi_command_web:
     dependency: transitive
     description:
@@ -142,13 +142,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  midi:
-    dependency: transitive
-    description:
-      name: midi
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
   path:
     dependency: transitive
     description:
