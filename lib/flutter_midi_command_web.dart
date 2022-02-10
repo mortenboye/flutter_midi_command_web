@@ -141,7 +141,12 @@ class FlutterMidiCommandWeb extends MidiCommandPlatform {
     });
     print("send to devices: $data");
     for (var outport in outputPorts) {
-      outport.send(data, 1);
+      try {
+        outport.send(data, 1);
+      } catch (e, _) {
+        // currently bug in Dart-JS interop: https://github.com/flutter/flutter/issues/94945#issuecomment-1033596770
+        print('Flutter Bug: #94945 caught: $e');
+      }
     }
   }
 
