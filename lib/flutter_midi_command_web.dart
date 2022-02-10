@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:js_util' as js_util;
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
@@ -41,8 +40,14 @@ class FlutterMidiCommandWeb extends MidiCommandPlatform {
         .requestMIDIAccess(html.MIDIOptions(sysex: true, software: false));
 
     // deal with bug: https://github.com/dart-lang/sdk/issues/33248
-    js_util.callMethod(access.inputs, 'forEach', [allowInterop(_getInputs)]);
-    js_util.callMethod(access.outputs, 'forEach', [allowInterop(_getOutputs)]);
+    // js_util.callMethod(access.inputs, 'forEach', [allowInterop(_getInputs)]);
+    // js_util.callMethod(access.outputs, 'forEach', [allowInterop(_getOutputs)]);
+    access.inputs.forEach((a, b, c) {
+      _getInputs(a, b, c);
+    });
+    access.outputs.forEach((a, b, c) {
+      _getOutputs(a, b, c);
+    });
   }
 
   void _getInputs(dynamic a, dynamic b, dynamic c) {

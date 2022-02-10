@@ -82,7 +82,7 @@ class _MyAppState extends State<MyApp> {
                           onPressed: () {
                             print('send all off');
                             _midiCommand.sendData(
-                                Uint8List.fromList(fireAllPads(0, 10, 70)));
+                                Uint8List.fromList(fireAllPads(0, 0, 0)));
                           })
                     ],
                   );

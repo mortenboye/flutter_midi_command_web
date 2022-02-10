@@ -120,7 +120,7 @@ packages:
       name: js_bindings
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.5"
+    version: "0.0.6-dev"
   matcher:
     dependency: transitive
     description:
