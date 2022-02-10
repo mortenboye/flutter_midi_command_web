@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:js_util' as js_util;
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
@@ -41,8 +40,14 @@ class FlutterMidiCommandWeb extends MidiCommandPlatform {
         .requestMIDIAccess(html.MIDIOptions(sysex: true, software: false));
 
     // deal with bug: https://github.com/dart-lang/sdk/issues/33248
-    js_util.callMethod(access.inputs, 'forEach', [allowInterop(_getInputs)]);
-    js_util.callMethod(access.outputs, 'forEach', [allowInterop(_getOutputs)]);
+    // js_util.callMethod(access.inputs, 'forEach', [allowInterop(_getInputs)]);
+    // js_util.callMethod(access.outputs, 'forEach', [allowInterop(_getOutputs)]);
+    access.inputs.forEach((a, b, c) {
+      _getInputs(a, b, c);
+    });
+    access.outputs.forEach((a, b, c) {
+      _getOutputs(a, b, c);
+    });
   }
 
   void _getInputs(dynamic a, dynamic b, dynamic c) {
@@ -89,7 +94,8 @@ class FlutterMidiCommandWeb extends MidiCommandPlatform {
 
   /// Connects to the device.
   @override
-  void connectToDevice(MidiDevice device, {List<MidiPort>? ports}) {
+  Future<void> connectToDevice(MidiDevice device,
+      {List<MidiPort>? ports}) async {
     // connect up incoming webmidi data to our rx stream of MidiPackets
     final inputPorts = _webMidiInputs.where((p) => p.name == device.name);
     for (var inport in inputPorts) {
@@ -122,18 +128,27 @@ class FlutterMidiCommandWeb extends MidiCommandPlatform {
 
   @override
   void teardown() {
-    //TODO: go through and call disconnect on all devics, then close rx stream
+    //TODO: go through and call disconnect on all devices, then close rx stream
   }
 
-  /// Sends data to the currently connected device.wmidi hardware driver name
+  /// Sends data to the currently connected devices
   ///
   /// Data is an UInt8List of individual MIDI command bytes.
   @override
   void sendData(Uint8List data, {int? timestamp, String? deviceId}) {
-    // _connectedDevices.values.forEach((device) {
-    //   // print("send to $device");
-    //   device.send(data, data.length);
-    // });
+    final outputPorts = <html.MIDIOutput>[];
+    _connectedDevices.forEach((device) {
+      outputPorts.addAll(_webMidiOutputs.where((p) => p.name == device.name));
+    });
+    print("send to devices: $data");
+    for (var outport in outputPorts) {
+      try {
+        outport.send(data, 1);
+      } catch (e, _) {
+        // currently bug in Dart-JS interop: https://github.com/flutter/flutter/issues/94945#issuecomment-1033596770
+        print('Flutter Bug: #94945 caught: $e');
+      }
+    }
   }
 
   /// Stream firing events whenever a midi package is received.

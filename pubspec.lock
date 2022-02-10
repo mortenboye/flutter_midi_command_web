@@ -68,7 +68,7 @@ packages:
       name: flutter_midi_command_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4"
+    version: "0.4.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -92,7 +92,7 @@ packages:
       name: js_bindings
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.5"
+    version: "0.0.6-dev"
   lints:
     dependency: transitive
     description:

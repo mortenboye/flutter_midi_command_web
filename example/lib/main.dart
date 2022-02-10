@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_midi_command/flutter_midi_command.dart';
+import 'package:flutter_midi_command_web_example/fire_midi.dart';
 
 void main() {
   runApp(const MyApp());
@@ -76,6 +77,13 @@ class _MyAppState extends State<MyApp> {
                             }),
                       ),
                       Text('Last midi: $lastMidiMesg'),
+                      MaterialButton(
+                          child: Text('FIRE ALL PADS OFF'),
+                          onPressed: () {
+                            print('send all off');
+                            _midiCommand.sendData(
+                                Uint8List.fromList(fireAllPads(0, 0, 0)));
+                          })
                     ],
                   );
                 })),
