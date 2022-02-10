@@ -4,13 +4,6 @@ Demonstrates how to use the flutter_midi_command_web plugin.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This example is intended to work with an Akai Fire midi-controller, but incoming midi events should be displayed for any midi controller, while the demonstration of sending midi data is Fire specific.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Note: currently there is a bug with displaying the listview of available midi devices on app start, so you need to do a hot-reload in order to get the listview items ui to appear.
